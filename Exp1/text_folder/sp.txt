@@ -1,0 +1,15 @@
+This is a test document.
+An OS is an interface between a computer user and a computer hardware. 
+An OS is a software which performs all the basic tasks like file management, memory management, process management, handling input and output, and controlling peripheral devices such as disk drives and printers.
+Operating system is one of the core subjects in computer science.
+Operating system is one of the core subjects in computer science.
+Unix is a great OS. 
+UNIX is a free OS.
+Unix systems use a centralized operating system kernel which manages system and process activities.
+Unix is a great OS. 
+UNIX is a free OS.
+UNixOS systems use a centralized operating system kernel which manages system and process activities.
+A user can also run multiple programs at the same time; hence Unix is a multitasking environment.
+UNIX is a free OS.
+Multiuser operating system.
+Yet another powerful OS.

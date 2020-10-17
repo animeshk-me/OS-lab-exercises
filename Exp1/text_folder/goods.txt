@@ -1,0 +1,7 @@
+stationary, pen, 23
+artificial, table, 234
+stationary, pencil, 10
+edibles, pizza, 400
+artificial, chair, 239
+edibles, samosa, 34
+stationary, scale, 40

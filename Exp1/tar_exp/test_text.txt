@@ -1,0 +1,67 @@
+LINUX COMMANDS
+1. Test drive and understand the usage of all the commands given in the 50 Most Frequently
+Used UNIX / Linux Commands and linuxcommands.pdf
+2. Create a directory and create a file inside that directory.
+3. List the files and directories that are empty in a working directory.
+4. Show commands to delete empty and non-empty directory.
+5. Find the location of the input files using locate and find command.
+6. View the user permissions and ownership of the files in the current directory and change the
+ownership of some selected files to another user.
+7. List all the files in the current directory and subdirectories.
+8. Concatenate the two input files: “sample1.txt” and “sample2.txt” and save it to a new file
+named “Input”.
+9. Copy the contents of file ‘sample2.txt’ to ‘sample.txt’
+10. Append the file contents of input file ‘sample2.txt’ to the end of the first input file
+‘sample1.txt’.
+11. Remove the permission for the users to read, write and execute the file ‘sample.txt’.
+12. Display the current date with the day of week, month, time and the year.
+13. Show the calendar of previous, current and next month.
+14. Sort the contents of the file ‘sample1.txt’ in alphabetical order.
+15. Erase duplicate records in the file ‘sample1.txt’ and display only the unique records
+16. Add line numbers to the file ‘sample2.txt’
+17. Find out whether the two pairs of input files are identical or not.
+Compare sample1.txt and sample2.txt
+Compare sample2.txt and sample.txt
+18. Show how the input file “sample1.txt” differs line by line from “sample2.txt” in context and
+unified mode.
+19. Solve the arithmetic expression: ((8+12)*(5-3))/2 using linux commands,
+20. Cut and display the first 10 characters of every line of the file “Input.txt”.
+21. Print the name of the current working directory.
+22. Process Status
+a. List all the running processes with their corresponding PIDs.
+b. List the processes that are not associated with the terminal.
+c. List the processes that are associated with the terminal.
+23. Print the number of characters, number of lines and number of words all the given input files.
+
+24. Print the length of the longest line from all the input files.
+25. Move the contents of the input file sample.txt to a new file.
+26. Copy the contents of one directory to another directory.
+27. Reverse the lines of the two input files and concatenate the file contents using a single
+command.
+28. Delete all the files with *.txt extension from the working directory using yes command.
+29. Given the input file “sample1.txt”, print the number of the lines that match the pattern
+“system”.
+30. Having sample1 file as input, print the matched lines that contain the pattern “Unix” as whole
+words.
+31. Print the lines from “sample1.txt” that do not match the pattern “OS”.
+32. Fetch the files that contain the word “OS”, “Operating System”, “Operating Systems” with its
+respective line number. (Ignore the case).
+33. Having “sample1.txt” and “core” as the input and pattern respectively, along with the
+matched line print three lines before and after the pattern match.
+34. Find and replace the string “OS” with “Operating System”.
+35. List only the text files in the current working directory with its corresponding disk space
+occupied.
+36. Show the last modification time of all the input text files.
+37. Delete the line that has the word “Powerful” from text file “sample2.txt”.
+38. Print the roll numbers that end with even numbers in the format (COE18B002) up to
+COE18B050.
+39. Use filter commands like head, tail, more to view the file contents page by page.
+40. Compress the current working directory contents to a tar file and extract those files from the
+compressed tar file.
+41. Compress the files using zip command.
+a. Zip the input file “sample1.txt” as samplezip.zip and remove the file from the current
+directory after zipping.
+b. Add “sample2.txt” and update the zip archive.
+c. Zip a directory with all its contents.
+d. Remove a file from the zip archive
+e. Unzip the contents from samplezip.zip

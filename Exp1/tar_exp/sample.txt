@@ -1,0 +1,8 @@
+Unix was originally developed in 1969 by a group of AT&T employees Ken Thompson, Dennis Ritchie, Douglas McIlroy, and Joe Ossanna at Bell Labs.
+There are various Unix variants available in the market. Solaris Unix, AIX, HP Unix and BSD are a few examples. Linux is also a flavor of Unix which is freely available.
+Several people can use a Unix computer at the same time; hence Unix is called a multiuser system.
+A user can also run multiple programs at the same time; hence Unix is a multitasking environment.
+UNIX is a free OS.
+Multiuser operating system.
+Yet another powerful OS.
+
