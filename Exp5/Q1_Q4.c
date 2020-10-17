@@ -21,6 +21,7 @@ int main() {
   int fd2[2];  // Child writing and Parent Reading
   pipe(fd1);
   pipe(fd2);
+  memset(str, 0, SIZE);
   pid_t pid = fork();
   if (pid == 0) {  // Child Process
     // Take string from parent
@@ -38,6 +39,7 @@ int main() {
   }
   else {
     char rev_str[SIZE];
+    memset(rev_str, 0, SIZE);
     get_input(str);    
    
     // Send the read string to the child
@@ -78,6 +80,7 @@ void RipOffNextLine(char * str) {
 // Revers the input string 'str'
 void Reverse(char * str) {
   char rev_str[SIZE];
+  memset(rev_str, 0, SIZE);
   int i = 0;
   int j = 0;
   while(str[i] != '\0')
