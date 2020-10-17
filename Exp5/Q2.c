@@ -1,6 +1,3 @@
-/* Q1 and Q4 both are done here. Reversing the string in child. 
-And checking the palindrome in parent. */
-
 #include<stdio.h> 
 #include<stdlib.h> 
 #include<unistd.h> 
