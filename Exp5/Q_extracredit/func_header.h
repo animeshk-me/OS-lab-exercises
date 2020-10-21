@@ -5,18 +5,27 @@
 #include<string.h> 
 #include<sys/wait.h> 
 #include<time.h>
+#include<pthread.h>
+
+#define SIZE 100
+
+// A package to pass around data among threads
+struct block {
+  int id;   // row_id or col_id
+  int end;  // index of end of row/column
+  char str1[SIZE];  // first string
+  char str2[SIZE];  // second string
+};
 
 int len1, len2;
+int Cache[SIZE + 1][SIZE + 1]; // Cache table for dynamic programming
 
-void Initialize(int Cache[][len2 + 1]);
+void Initialize();
+void *runner_row(void* params);
+void *runner_col(void* params);
+
 int LCS(char * str1, char * str2);
-void FillRow(int row_id, int row_end, char * str1, char * str2, int Cache[][len2 + 1]);
-void FillColumn(int col_id, int col_end, char * str1, char * str2, int Cache[][len2 + 1]);
-int FillCell(int x, int y, char * str1, char * str2, int Cache[][len2 + 1]);
-void SendRow(int row_id, int Cache[][len2 + 1], int * fd);
-void SendColumn(int col_id, int Cache[][len2 + 1], int * fd);
-void copy_column(int col_id, int src[][len2 + 1], int dest[][len2 + 1]);
-void ReceiveRowAndColumn(int row_id, int col_id, int Cache[][len2 + 1], int * fd1, int * fd2);
+int FillCell(int x, int y, char * str1, char * str2);
 
 int maximum(int n1, int n2);
 void get_input(char * str, char * msg);

@@ -1,104 +1,61 @@
 #include "func_header.h"
 
-#define SIZE 100
 
-/**************** Multiprocessing Setup ************************/
 
-// Returns length of longest common subsequence using Multiprocessing
+/*********************** Multithreading Setup ************************/
+
+// Returns length of longest common subsequence using Multithreading
 int LCS(char * str1, char * str2) {
-  int Cache[len1 + 1][len2 + 1];
-  pid_t pid1, pid2, wpid;
-  int pivot;
-  int status = 0; 
-  int fd1[2];
-  int fd2[2];
-  int fd3[2];
-  int fd4[2];
+  // setting up arguments to be passed on to the threads
+  struct block row_args, col_args; 
+  strcpy(row_args.str1, str1);
+  strcpy(row_args.str2, str2);
+  col_args = row_args;
   memset(Cache, -1, sizeof(Cache));
-  Initialize(Cache);
+  Initialize();
+
   int i = len1 - 1;
   int j = len2 - 1;
-  while((i >= 0) && (j >= 0)) {
-    pipe(fd1);
-    pipe(fd2);
-    pipe(fd3);
-    pipe(fd4);
-    (pid1 = fork()) && (pid2 = fork());
-    if (pid1 == 0) {      // First Child Process
-    // Take pivot from the parent
-      close(fd3[1]); 
-      read(fd3[0], &pivot, 4);
-      close(fd3[0]);
-      Cache[i][j] = pivot;
-      FillRow(i, j - 1, str1, str2, Cache);
-      SendRow(i, Cache, fd1);
-      exit(0);
-    }
-    else if (pid2 == 0) { // Second Child Process
-    // Take pivot from the parent
-      close(fd4[1]);
-      read(fd4[0], &pivot, 4);
-      close(fd4[0]);
-      Cache[i][j] = pivot;
-      FillColumn(j, i - 1, str1, str2, Cache);
-      SendColumn(j, Cache, fd2);
-      exit(0);
-    }
-    else {          // Parent Process
-      pivot = FillCell(i, j, str1, str2, Cache);
-      // Send the calculated pivot to both the children
-      close(fd3[0]);
-      write(fd3[1], &pivot, 4);
-      close(fd3[1]);
-      close(fd4[0]);
-      write(fd4[1], &pivot, 4);
-      close(fd4[1]);
 
-      while ((wpid = wait(&status)) > 0) // wait till all the children finish
-      
-      // Receive the modified row and column from the two children
-      ReceiveRowAndColumn(i, j, Cache, fd1, fd2);
-      i--;
-      j--;
-    }
+  // while you exhaust either the width or the length of the Cache
+  while((i >= 0) && (j >= 0)) {
+    Cache[i][j] = FillCell(i, j, str1, str2);
+    row_args.id = i;
+    row_args.end = j - 1;
+    col_args.id = j;
+    col_args.end = i - 1;
+    pthread_t tid1, tid2;
+    pthread_attr_t attr;
+    pthread_attr_init(&attr);
+
+    pthread_create(&tid1, &attr, runner_row, &row_args);
+    pthread_create(&tid2, &attr, runner_col, &col_args);
+    pthread_join(tid1, NULL);
+    pthread_join(tid2, NULL);
+    i--;
+    j--;    
   }
   return Cache[0][0];
 }
 
-// Recieve the Row and column from the children via pipes
-void ReceiveRowAndColumn(int row_id, int col_id, int Cache[][len2 + 1], int * fd1, int * fd2) {
-  int Matrix[len1 + 1][len2 + 1];
-  close(fd1[1]);
-  read(fd1[0], Cache[row_id], (len2 + 1) * 4);
-  close(fd1[0]);
-  close(fd2[1]);
-  read(fd2[0], Matrix, (len1 + 1) * (len2 + 1) * 4);
-  close(fd2[0]);
-  copy_column(col_id, Matrix, Cache);
+// The thread routine required to fill a single row
+void *runner_row(void* params) {
+  struct block * args = params;
+  for (int i = args->end; i >= 0; i--)
+    FillCell(args->id, i, args->str1, args->str2);
+  pthread_exit(NULL);
 }
 
-// Copy the 'col_id' from 'src[][]' to 'dest[][]'
-void copy_column(int col_id, int src[][len2 + 1], int dest[][len2 + 1]) {
-  for(int i = 0; i < len1; i++)
-    dest[i][col_id] = src[i][col_id];
-}
-
-// Send the row with 'row_id' to the parent via pipes
-void SendRow(int row_id, int Cache[][len2 + 1], int * fd) {
-  close(fd[0]);
-  write(fd[1], Cache[row_id], (len2 + 1) * 4);
-  close(fd[1]);
-}
-
-// Send the column with 'col_id' to the parent via pipes
-void SendColumn(int col_id, int Cache[][len2 + 1], int * fd) {
-  close(fd[0]);
-  write(fd[1], Cache, (len1 + 1) * (len2 + 1) * 4);
-  close(fd[1]);
+// the thread routine required to fill a single column
+void *runner_col(void *params) {
+  struct block * args = params;
+  for (int j = args->end; j >= 0; j--) 
+    FillCell(j, args->id, args->str1, args->str2);
+  pthread_exit(NULL);
 }
 
 // Fills the Cell (i, j) appropriately
-int FillCell(int x, int y, char * str1, char * str2, int Cache[][len2 + 1]) {
+int FillCell(int x, int y, char * str1, char * str2) {
   if(str1[x] == str2[y])
     Cache[x][y] = 1 + Cache[x + 1][y + 1];
   else
@@ -106,20 +63,9 @@ int FillCell(int x, int y, char * str1, char * str2, int Cache[][len2 + 1]) {
   return Cache[x][y];
 }
 
-// Fills the row with 'row_id' appropriately
-void FillRow(int row_id, int row_end, char * str1, char * str2, int Cache[][len2 + 1]) {
-  for (int i = row_end; i >= 0; i--)
-    FillCell(row_id, i, str1, str2, Cache);
-}
-
-// Fills the column with 'col_id' appropriately
-void FillColumn(int col_id, int col_end, char * str1, char * str2, int Cache[][len2 + 1]) {
-  for (int j = col_end; j >= 0; j--) 
-    FillCell(j, col_id, str1, str2, Cache);
-}
 
 // Initialize the Cache table with base cases
-void Initialize(int Cache[][len2 + 1]) {
+void Initialize() {
   for (int i = 0; i <= len1; i++)
     Cache[i][len2] = 0;
   for (int i = 0; i <= len2; i++)
@@ -127,7 +73,6 @@ void Initialize(int Cache[][len2 + 1]) {
 }
 
 /********************************************************************/
-
 
 
 

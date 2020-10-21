@@ -1,6 +1,6 @@
 #include "func_header.h"
 
-#define SIZE 100
+// #define SIZE 100
 
 int main() {
   char str1[SIZE];
