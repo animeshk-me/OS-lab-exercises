@@ -1,0 +1,8 @@
+Type the below command in the current folder:
+
+#  gcc LCS_main.c func_header.c -o LCS_finder -lpthread
+
+then do
+
+#  ./LCS_finder
+
