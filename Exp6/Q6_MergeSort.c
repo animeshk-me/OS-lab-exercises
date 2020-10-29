@@ -10,7 +10,6 @@
 // A package to pass around data among threads
 struct block {
   int * arr;  // the array
-  int size;   // the size of the array
   int start;  // the start index     
   int end;    // the end index
 };
@@ -28,7 +27,6 @@ int main  () {
   
   struct block args;
   args.arr = arr;
-  args.size = size;
   args.start = 0;
   args.end = size - 1;
   pthread_t tid;
@@ -49,12 +47,10 @@ void *runner(void * params) {
     int mid = args->start + (args->end - args->start) / 2;
     struct block args_left, args_right;
     args_left.arr = args->arr;
-    args_left.size = args->size;
     args_left.start = args->start;
     args_left.end = mid;
   
     args_right.arr = args->arr;
-    args_right.size = args->size;
     args_right.start = mid + 1;
     args_right.end = args->end;
 
