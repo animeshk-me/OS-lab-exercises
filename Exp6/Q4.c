@@ -16,6 +16,10 @@ _Bool is_prime(int n);
 void * runner(void * params);
 
 int main(int argc, char** argv) {
+  if (argc < 2) {  // wrong input
+    fprintf(stderr, "Too few arguments.\nEnter a number N, such that we print all the prime numbers smaller than or equal to N\n");
+    exit(1);
+  }
   int n = atoi(argv[1]);
   printf("The Prime numbers smaller than or equal to %d: \n", n);
 
