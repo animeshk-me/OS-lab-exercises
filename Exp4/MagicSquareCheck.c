@@ -64,7 +64,7 @@ int is_magic(int Matrix[][size]) {
     exit(0);
   }
   else if (pid3 == 0)  {  // Child 3 block
-    int sum = DiagonalSum(RIGHT, Matrix);
+    int sum = DiagonalSum(LEFT, Matrix);
     // Send the 'sum' to parent process via pipe
     close(fd3[0]); 
     write(fd3[1], &sum, 4); 
